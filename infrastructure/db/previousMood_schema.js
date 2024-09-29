@@ -1,8 +1,8 @@
 //  user id date timestamp note
-// for journal
+//for quotes 
 const mongoose = require('mongoose');
 
-const journalSchema = new  mongoose.Schema({
+const previousMoodSchema = new  mongoose.Schema({
     id: {
         type: String,
         unique: true,
@@ -12,17 +12,10 @@ const journalSchema = new  mongoose.Schema({
         type: String,
         required: true,
     },
-    title: {
+    prevMood: {
         type: String,
         required: true,
-    },
-    content: {
-        type: String,
-    },
-    dateadded: {
-        type: Date,
-        default: Date.now,
     }
 });
 
-module.exports = mongoose.model("Journal", journalSchema);
+module.exports = mongoose.model("PreviousMood", previousMoodSchema);

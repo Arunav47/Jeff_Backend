@@ -1,8 +1,8 @@
 //  user id date timestamp note
-// for journal
+// for feedback page
 const mongoose = require('mongoose');
 
-const journalSchema = new  mongoose.Schema({
+const moodSchema = new  mongoose.Schema({
     id: {
         type: String,
         unique: true,
@@ -12,12 +12,13 @@ const journalSchema = new  mongoose.Schema({
         type: String,
         required: true,
     },
-    title: {
+    mood: {
         type: String,
         required: true,
     },
-    content: {
-        type: String,
+    felling_better: {
+        type: Boolean,
+        required: true,
     },
     dateadded: {
         type: Date,
@@ -25,4 +26,4 @@ const journalSchema = new  mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("Journal", journalSchema);
+module.exports = mongoose.model("Mood", moodSchema);
