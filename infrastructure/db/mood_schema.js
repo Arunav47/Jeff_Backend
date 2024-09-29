@@ -6,7 +6,7 @@ const moodSchema = new  mongoose.Schema({
     id: {
         type: String,
         unique: true,
-        required: true
+        required: true,
     },
     userid: {
         type: String,
