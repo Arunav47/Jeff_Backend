@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 const mongoose = require('mongoose');
-const Journal = require('./../infrastructure/db/journal_schema');
+
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,9 +15,13 @@ mongoose.connect(mongoDbPath).then(function() {
         const response = { statuscode: res.statusCode, message: "API Works!" };
         res.json(response);
     });
-    
+
+    const AnalyticsRouter= require('./../adapters/routes/analytics');
     const JournalRouter = require('./../adapters/routes/journal');
+
+
     app.use("/Journals", JournalRouter);
+    app.use("/Analytics",AnalyticsRouter);
 });
 
 // Starting the server on a PORT
