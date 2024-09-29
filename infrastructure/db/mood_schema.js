@@ -16,7 +16,7 @@ const moodSchema = new  mongoose.Schema({
         type: String,
         required: true,
     },
-    felling_better: {
+    feeling_better: {
         type: Boolean,
         required: true,
     },
