@@ -1,5 +1,5 @@
 const express = require('express');
-const crouter = express.Router();
+const router = express.Router();
 
 const Journal = require('./../../infrastructure/db/journal_schema');
 
