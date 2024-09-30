@@ -3,13 +3,13 @@ const express = require('express');
 const app = express();
 
 const mongoose = require('mongoose');
-
+require('dotenv').config();
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const mongoDbPath = "mongodb+srv://majumdersubham14082003:missionjeff@cluster0.lcdh6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const mongoDbPath = process.env.MONGO_URL;
 mongoose.connect(mongoDbPath).then(function() {
     app.get("/", function(req, res) {
         const response = { statuscode: res.statusCode, message: "API Works!" };
