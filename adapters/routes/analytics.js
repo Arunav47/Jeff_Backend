@@ -61,7 +61,7 @@ router.post('/mood_distribution', async (req, res) => {
     const perExcitement = (excitement / totalEntries) * 100;
 
     return res.json({
-        anger: perAnger, happy: perHappy.toFixed(2), fear: perFear.toFixed(2), anxiety: perAnxiety.toFixed(2), sadness: perSadness.toFixed(2), boredom: perBoredom.toFixed(2), excitement: perExcitement.toFixed(2)
+        anger: perAnger.toFixed(2), happy: perHappy.toFixed(2), fear: perFear.toFixed(2), anxiety: perAnxiety.toFixed(2), sadness: perSadness.toFixed(2), boredom: perBoredom.toFixed(2), excitement: perExcitement.toFixed(2)
     });
 })
 
