@@ -18,8 +18,9 @@ mongoose.connect(mongoDbPath).then(function() {
 
     const AnalyticsRouter= require('./../adapters/routes/analytics');
     const JournalRouter = require('./../adapters/routes/journal');
+    const GeminiRouter = require('./../adapters/routes/gemini');
 
-
+    app.use("/Gemini", GeminiRouter);
     app.use("/Journals", JournalRouter);
     app.use("/Analytics",AnalyticsRouter);
 });

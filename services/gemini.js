@@ -3,9 +3,6 @@
  *
  * $ npm install @google/generative-ai
  */
-class GeminiServices{
-
-}
 
 const express = require('express');
 const router = express.Router();
