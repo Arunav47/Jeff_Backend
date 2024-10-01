@@ -1,9 +1,9 @@
 // Initialization
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 const mongoose = require('mongoose');
-require('dotenv').config();
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,7 +26,7 @@ mongoose.connect(mongoDbPath).then(function() {
 });
 
 // Starting the server on a PORT
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, function() {
     console.log("Server started at PORT: " + PORT);
 });

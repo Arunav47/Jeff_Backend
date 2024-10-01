@@ -79,21 +79,24 @@ router.post('/feedback_percentage', async (req, res) => {
     try {
         const userid = req.body.userid;
         if (!userid) {
-            return res.json({ message: "User ID is required" });
+            return res.json({ message: "User ID is required"});
         }
 
         const totalEntries = await Mood.countDocuments({ userid });
 
         if (totalEntries === 0) {
-            return res.json({ message: `No entries found for user ${userid}`, percentage: 0 });
+            return res.json({percentage_not_better: "0.00", percentage_not_better: "0.00"});
         }
 
         const feelingBetterEntries = await Mood.countDocuments({ userid, feeling_better: true });
+        const feelingNotBetterEntries = await Mood.countDocuments({ userid, feeling_better: false });
+
         const percentageFeelingBetter = (feelingBetterEntries / totalEntries) * 100;
+        const percentageFeelingNotBetter = (feelingNotBetterEntries / totalEntries) * 100;
 
         return res.json({
-            message: `Percentage of times user ${userid} felt better`,
-            percentage: percentageFeelingBetter.toFixed(2), // Format to 2 decimal places
+            percentage_better: percentageFeelingBetter.toFixed(2), // Format to 2 decimal places
+            percentage_not_better: percentageFeelingNotBetter.toFixed(2), // Format to 2 decimal places
         });
     } catch (error) {
         console.error("Error calculating feedback percentage:", error);
