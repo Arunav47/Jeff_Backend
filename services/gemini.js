@@ -7,6 +7,7 @@
 const express = require('express');
 require('dotenv').config();
 const router = express.Router();
+require('dotenv').config();
 const {
     GoogleGenerativeAI,
     HarmCategory,
@@ -23,7 +24,7 @@ const {
 
   const model2 = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
-    systemInstruction: "Give me a quote based on the mood to lighten the mood more"
+    systemInstruction: "Give me a quote based on the mood to lighten the mood more and make sure the quote is not more than 10 words and dont repeat a quote too often try new quotes"
   })
   
   const generationConfig = {

@@ -1,15 +1,15 @@
 // Initialization
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 const mongoose = require('mongoose');
-
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const mongoDbPath = "mongodb+srv://majumdersubham14082003:missionjeff@cluster0.lcdh6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const mongoDbPath = process.env.MONGO_URL;
 mongoose.connect(mongoDbPath).then(function() {
     app.get("/", function(req, res) {
         const response = { statuscode: res.statusCode, message: "API Works!" };
@@ -26,7 +26,7 @@ mongoose.connect(mongoDbPath).then(function() {
 });
 
 // Starting the server on a PORT
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, function() {
     console.log("Server started at PORT: " + PORT);
 });
