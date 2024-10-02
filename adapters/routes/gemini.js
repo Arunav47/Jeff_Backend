@@ -18,17 +18,23 @@ router.post('/chat', async (req, res) => {
 
 router.post('/mood', async (req, res) => {
     try {
-        // const userMood = req.body.mood;
-        // if (!userMood) {
-        //     return res.status(400).json({ error: 'Mood is required' });
-        // }
         const userid = req.body.userid;
         const latestMood = await Mood.findOne({ userid }).sort({ dateadded: -1 });
-        if (!latestMood) {
-            latestMood.mood="happy";
+        if (latestMood == null) {
+            newMood = new Mood({
+                id:"0",
+                userid:userid,
+                feeling_better:false,
+                mood:"happy",
+                dateadded: Date.now()
+            })
+            const chatbotResponse = await gemini.getQuote(newMood.mood);
+            res.json({ reply: chatbotResponse });
         }
-        const chatbotResponse = await gemini.getQuote(latestMood.mood);
-        res.json({ reply: chatbotResponse });
+        else{
+            const chatbotResponse = await gemini.getQuote(latestMood.mood);
+            res.json({ reply: chatbotResponse });
+        }
     } catch (error) {
         console.error('Error during mood:', error);
         res.status(500).json({ reply: 'Something went wrong while processing the mood' });
