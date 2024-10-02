@@ -11,7 +11,7 @@ router.post('/chat', async (req, res) => {
         const chatbotResponse = await gemini.run(userMessage);
         res.json({ reply: chatbotResponse });
     } catch (error) {
-        console.error('Error during chat:', error);
+        // console.error('Error during chat:', error);
         res.status(500).json({ error: 'Something went wrong while processing the chat' });
     }
 });
@@ -36,7 +36,7 @@ router.post('/mood', async (req, res) => {
             res.json({ reply: chatbotResponse });
         }
     } catch (error) {
-        console.error('Error during mood:', error);
+        // console.error('Error during mood:', error);
         res.status(500).json({ reply: 'Something went wrong while processing the mood' });
     }
 });
