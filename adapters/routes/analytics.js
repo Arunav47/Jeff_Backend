@@ -16,8 +16,8 @@ router.post("/add", async (req, res) => {
         const response = { message: "New mood Created! " + `id: ${req.body.id}` };
         res.json(response);
     } catch (error) {
-        console.error("Error adding mood:", error);
-        res.status(500).json({ message: "Error adding mood", error: error.message });
+        // console.error("Error adding mood:", error);
+        res.status(500).json({ message: "Error adding mood", error: "Something went wrong" });
     }
 });
 
@@ -34,8 +34,8 @@ router.post("/previous_mood", async (req, res) => {
         }
         return res.json({ mood: latestMood.mood });
     } catch (error) {
-        console.error("Error fetching previous mood:", error);
-        res.status(500).json({ message: "Error fetching previous mood", error: error.message });
+        // console.error("Error fetching previous mood:", error);
+        res.status(500).json({ message: "Error fetching previous mood", error: "Something went wrong" });
     }
 });
 
@@ -47,7 +47,7 @@ router.post('/mood_distribution', async (req, res) => {
         }
         const totalEntries = await Mood.countDocuments({ userid });
         if (totalEntries === 0) {
-            return res.json({ anger: "0.00", happy: "0.00", fear: "0.00", anxiety: "0.00", sadness: "0.00", boredom: "0.00", excitement: "0.00" });
+            return res.json({totalEntries: "0", anger: "0.00", happy: "0.00", fear: "0.00", anxiety: "0.00", sadness: "0.00", boredom: "0.00", excitement: "0.00" });
         }
         const anger = await Mood.countDocuments({ userid, mood: "anger" });
         const happy = await Mood.countDocuments({ userid, mood: "happy" });
@@ -66,12 +66,13 @@ router.post('/mood_distribution', async (req, res) => {
         const perExcitement = (excitement / totalEntries) * 100;
 
         return res.json({
+            totalEntries: totalEntries,
             anger: perAnger.toFixed(2), happy: perHappy.toFixed(2), fear: perFear.toFixed(2), anxiety: perAnxiety.toFixed(2),
             sadness: perSadness.toFixed(2), boredom: perBoredom.toFixed(2), excitement: perExcitement.toFixed(2)
         });
     } catch (error) {
-        console.error("Error calculating mood distribution:", error);
-        res.status(500).json({ message: "Error calculating mood distribution", error: error.message });
+        // console.error("Error calculating mood distribution:", error);
+        res.status(500).json({ message: "Error calculating mood distribution", error: "Something went wrong" });
     }
 });
 
@@ -85,7 +86,7 @@ router.post('/feedback_percentage', async (req, res) => {
         const totalEntries = await Mood.countDocuments({ userid });
 
         if (totalEntries === 0) {
-            return res.json({percentage_not_better: "0.00", percentage_not_better: "0.00"});
+            return res.json({totalEntries: "0", percentage_not_better: "0.00", percentage_not_better: "0.00"});
         }
 
         const feelingBetterEntries = await Mood.countDocuments({ userid, feeling_better: true });
@@ -95,12 +96,13 @@ router.post('/feedback_percentage', async (req, res) => {
         const percentageFeelingNotBetter = (feelingNotBetterEntries / totalEntries) * 100;
 
         return res.json({
+            totalEntries: totalEntries,
             percentage_better: percentageFeelingBetter.toFixed(2), // Format to 2 decimal places
             percentage_not_better: percentageFeelingNotBetter.toFixed(2), // Format to 2 decimal places
         });
     } catch (error) {
-        console.error("Error calculating feedback percentage:", error);
-        res.status(500).json({ message: "Error calculating feedback percentage", error: error.message });
+        // console.error("Error calculating feedback percentage:", error);
+        res.status(500).json({ message: "Error calculating feedback percentage", error: "Something went wrong" });
     }
 });
 
