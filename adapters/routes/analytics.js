@@ -43,12 +43,13 @@ router.post('/mood_distribution', async (req, res) => {
     try {
         const userid = req.body.userid;
         if (!userid) {
-            return res.json({ anger: "0.00", happy: "0.00", fear: "0.00", anxiety: "0.00", sadness: "0.00", boredom: "0.00", excitement: "0.00" });
+            return res.json({ anger: "0.00", calm: "0.00", happy: "0.00", fear: "0.00", anxiety: "0.00", sadness: "0.00", boredom: "0.00", excitement: "0.00" });
         }
         const totalEntries = await Mood.countDocuments({ userid });
         if (totalEntries === 0) {
-            return res.json({totalEntries: "0", anger: "0.00", happy: "0.00", fear: "0.00", anxiety: "0.00", sadness: "0.00", boredom: "0.00", excitement: "0.00" });
+            return res.json({totalEntries: "0", calm: "0.00", anger: "0.00", happy: "0.00", fear: "0.00", anxiety: "0.00", sadness: "0.00", boredom: "0.00", excitement: "0.00" });
         }
+        const calm = await Mood.countDocuments({ userid, mood: "calm" });
         const anger = await Mood.countDocuments({ userid, mood: "anger" });
         const happy = await Mood.countDocuments({ userid, mood: "happy" });
         const fear = await Mood.countDocuments({ userid, mood: "fear" });
@@ -56,7 +57,8 @@ router.post('/mood_distribution', async (req, res) => {
         const sadness = await Mood.countDocuments({ userid, mood: "sadness" });
         const boredom = await Mood.countDocuments({ userid, mood: "boredom" });
         const excitement = await Mood.countDocuments({ userid, mood: "excitement" });
-
+        
+        const perCalm = (calm / totalEntries) * 100;
         const perAnger = (anger / totalEntries) * 100;
         const perHappy = (happy / totalEntries) * 100;
         const perFear = (fear / totalEntries) * 100;
@@ -66,8 +68,8 @@ router.post('/mood_distribution', async (req, res) => {
         const perExcitement = (excitement / totalEntries) * 100;
 
         return res.json({
-            totalEntries: totalEntries,
-            anger: perAnger.toFixed(2), happy: perHappy.toFixed(2), fear: perFear.toFixed(2), anxiety: perAnxiety.toFixed(2),
+            totalEntries: totalEntries.toString(),
+            anger: perAnger.toFixed(2), happy: perHappy.toFixed(2), calm: perCalm.toFixed(2), fear: perFear.toFixed(2), anxiety: perAnxiety.toFixed(2),
             sadness: perSadness.toFixed(2), boredom: perBoredom.toFixed(2), excitement: perExcitement.toFixed(2)
         });
     } catch (error) {
@@ -86,7 +88,7 @@ router.post('/feedback_percentage', async (req, res) => {
         const totalEntries = await Mood.countDocuments({ userid });
 
         if (totalEntries === 0) {
-            return res.json({totalEntries: "0", percentage_not_better: "0.00", percentage_not_better: "0.00"});
+            return res.json({totalEntries: "0", percentage_better: "0.00", percentage_not_better: "0.00"});
         }
 
         const feelingBetterEntries = await Mood.countDocuments({ userid, feeling_better: true });
@@ -96,7 +98,7 @@ router.post('/feedback_percentage', async (req, res) => {
         const percentageFeelingNotBetter = (feelingNotBetterEntries / totalEntries) * 100;
 
         return res.json({
-            totalEntries: totalEntries,
+            totalEntries: totalEntries.toString(),
             percentage_better: percentageFeelingBetter.toFixed(2), // Format to 2 decimal places
             percentage_not_better: percentageFeelingNotBetter.toFixed(2), // Format to 2 decimal places
         });
