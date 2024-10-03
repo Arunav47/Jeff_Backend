@@ -52,3 +52,5 @@ cmd ngrok http http/localhost:8000
 
 ## FrontEnd Repository Link
 https://github.com/Arunav47/Jeff_FrontEnd
+## Release Link
+https://github.com/Arunav47/Jeff_FrontEnd/releases/tag/v.0.0.1
